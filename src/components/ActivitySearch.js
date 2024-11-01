@@ -119,7 +119,7 @@ const ActivitySearch = ({ onActivitySelected }) => {
   const handleActivityClick = (activity) => {
     setSelectedActivity(activity);
     setNumberOfPeople(1);  // Restablecemos el número de personas
-    setOpenDialog(false);  // Abrimos el diálogo
+    setOpenDialog(true);  // Abrimos el diálogo
   };
 
   const handleDialogClose = () => {
@@ -129,26 +129,27 @@ const ActivitySearch = ({ onActivitySelected }) => {
 
   const handleReserveActivity = () => {
     if (selectedActivity) {
-      Swal.fire({
-        title: "Confirmación de la actividad",
-        text: `Ha reservado para ${numberOfPeople} personas, la actividad ${selectedActivity.name}.`,
-        icon: "question",
-        confirmButtonText: "Sí, enviar confirmación",
-        showCancelButton: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          onActivitySelected({ ...selectedActivity, numberOfPeople });
-          handleDialogClose(); // Cerramos el diálogo después de reservar
-          Swal.fire({
-            title: "Reservado",
-            text: "La actividad ha sido confirmada con éxito.",
-            icon: "success",
-            confirmButtonText: "Cerrar",
-          });
-        }
-      });
+        handleDialogClose(); 
+
+        Swal.fire({
+            title: "Confirmación de la actividad",
+            text: `Ha reservado para ${numberOfPeople} personas, la actividad ${selectedActivity.name}.`,
+            icon: "question",
+            confirmButtonText: "Sí, enviar confirmación",
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                onActivitySelected({ ...selectedActivity, numberOfPeople });
+                Swal.fire({
+                    title: "Reservado",
+                    text: "La actividad ha sido confirmada con éxito.",
+                    icon: "success",
+                    confirmButtonText: "Cerrar",
+                });
+            }
+        });
     }
-  };
+};
 
   return (
     <motion.div
@@ -205,12 +206,10 @@ const ActivitySearch = ({ onActivitySelected }) => {
               {filteredActivities.map((activity) => (
                 <Card
                   key={activity.id}
-                  onClick={() => handleActivityClick(activity)}
                   sx={{
                     border: "1px solid #ccc",
                     borderRadius: "16px",
                     padding: "16px",
-                    cursor: "pointer",
                     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                     transition: "transform 0.2s, box-shadow 0.2s",
                     "&:hover": {
@@ -243,6 +242,15 @@ const ActivitySearch = ({ onActivitySelected }) => {
                     <Typography variant="body2" align="center">
                       Precio: {activity.price.amount} {activity.price.currency}
                     </Typography>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      onClick={() => handleActivityClick(activity)}
+                      sx={{ mt: 2 }}
+                    >
+                      Reservar
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -278,6 +286,9 @@ const ActivitySearch = ({ onActivitySelected }) => {
                     fullWidth
                     value={numberOfPeople}
                     onChange={(e) => setNumberOfPeople(e.target.value)}
+                    InputProps={{
+                      inputProps: { min: 1 },
+                    }}
                     sx={{ mt: 2 }}
                   />
                 </div>
@@ -285,9 +296,7 @@ const ActivitySearch = ({ onActivitySelected }) => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleDialogClose} color="primary">
-              Cancelar
-            </Button>
+            <Button onClick={handleDialogClose}>Cancelar</Button>
             <Button onClick={handleReserveActivity} color="primary">
               Reservar
             </Button>
