@@ -66,8 +66,8 @@ const Login = () => {
       background: "linear-gradient(135deg, #6DD5FA 0%, #061e4d 100%)",
       boxShadow: "0 15px 30px rgba(0,0,0,0.1)",
       width: "200%",
-      maxWidth: 650,
-      margin: 12,
+      maxWidth: 500,
+      marginLeft: 38,
       position: "relative",
     }}>
       <motion.div

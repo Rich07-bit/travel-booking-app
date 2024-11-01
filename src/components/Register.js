@@ -39,11 +39,9 @@ const Register = ({ onClose }) => {
         text: "Tu cuenta ha sido creada correctamente.",
         confirmButtonColor: "#1976d2",
       }).then(() => {
-        // Redirigir a la página de login después de cerrar el modal
         navigate("/login");
       });
     } catch (error) {
-      // Mostrar el error de Firebase en un modal
       Swal.fire({
         icon: "error",
         title: "Error al registrar",
@@ -66,7 +64,7 @@ const Register = ({ onClose }) => {
         boxShadow: "0 15px 30px rgba(0,0,0,0.1)",
         width: "80%",
         maxWidth: 500,
-        margin: 5,
+        marginLeft: 38,
         position: "relative",
       }}
     >
