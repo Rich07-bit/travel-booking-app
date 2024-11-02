@@ -403,30 +403,36 @@ const HotelBooking = () => {
             }}
           />
           <TextField
-            select
+            margin="dense"
             label="Number of Adults"
+            type="number"
             fullWidth
             value={adults}
             onChange={(e) => setAdults(e.target.value)}
-          >
-            {[1, 2, 3, 4, 5].map((num) => (
-              <MenuItem key={num} value={num}>
-                {num}
-              </MenuItem>
-            ))}
-          </TextField>
-          {errorMessage && (
-            <Typography color="error">{errorMessage}</Typography>
-          )}
-          {loading && <CircularProgress />}
+            InputProps={{
+              inputProps: { min: 1 },
+            }}
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleConfirmBooking} disabled={loading}>
-            Confirm
+          <Button onClick={handleDialogClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmBooking} color="primary" disabled={loading}>
+            {loading ? <CircularProgress size={24} /> : "Confirm Booking"}
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={errorMessage ? "error" : "success"} sx={{ width: '100%' }}>
+          {errorMessage || "Booking confirmed successfully!"}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
