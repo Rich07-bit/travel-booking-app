@@ -20,7 +20,9 @@ import {
 } from "@mui/material";
 import { IoBed } from "react-icons/io5";
 import { motion } from "framer-motion";
+import payment from './Payment'
 import Swal from "sweetalert2";
+import { Payment } from "@mui/icons-material";
 
 const HotelBooking = () => {
   const [hotels, setHotels] = useState([]);
@@ -35,7 +37,6 @@ const HotelBooking = () => {
   const [adults, setAdults] = useState(1);
   const [city, setCity] = useState("");
 
-  // Datos simulados
   const mockHotelsData = {
     NYC: [
       {

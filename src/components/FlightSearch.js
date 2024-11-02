@@ -23,6 +23,7 @@ import Swal from "sweetalert2";
 import { useUser } from "./UserContext"; 
 import { motion } from "framer-motion";
 import PaymentModule from "./Payment";
+import { Payment } from "@mui/icons-material";
 
 const airportCodes = [
   { code: "ATL", name: "Hartsfield-Jackson Atlanta International Airport" },
@@ -109,6 +110,7 @@ const FlightSearch = ({ onCategoryChange }) => {
       if (!flightResponse.ok) throw new Error("Failed to fetch flight data");
 
       const flightData = await flightResponse.json();
+      
 
       const uniqueFlights = Array.from(
         new Set(
@@ -411,6 +413,20 @@ const FlightSearch = ({ onCategoryChange }) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog open={paymentDialogOpen} onClose={() => setPaymentDialogOpen(false)}>
+      <DialogTitle>Confirmar Pago</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          ¿Deseas confirmar el pago para el vuelo seleccionado?
+        </DialogContentText>
+        <PaymentModule onPaymentSuccess={Payment} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setPaymentDialogOpen(false)} color="primary">
+          Cancelar
+        </Button>
+      </DialogActions>
+    </Dialog>
     </Box>
 </motion.div>
   );

@@ -20,16 +20,18 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import PropTypes from 'prop-types';
 import Swal from "sweetalert2";
+import PaymentModule from "./Payment"; 
 
-const ActivitySearch = ({ onActivitySelected }) => {
+const ActivitySearch = () => {
   const [activityDate, setActivityDate] = useState("");
   const [filteredActivities, setFilteredActivities] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
   const [numberOfPeople, setNumberOfPeople] = useState(1);
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
+  const [accessToken, setAccessToken] = useState(null);
 
   const apiKey = process.env.REACT_APP_AMADEUS_API_KEY;
   const secret = process.env.REACT_APP_AMADEUS_API_SECRET;
@@ -118,8 +120,8 @@ const ActivitySearch = ({ onActivitySelected }) => {
 
   const handleActivityClick = (activity) => {
     setSelectedActivity(activity);
-    setNumberOfPeople(1);  // Restablecemos el número de personas
-    setOpenDialog(true);  // Abrimos el diálogo
+    setNumberOfPeople(1);  // Reset number of people
+    setOpenDialog(true);  // Open dialog
   };
 
   const handleDialogClose = () => {
@@ -129,27 +131,32 @@ const ActivitySearch = ({ onActivitySelected }) => {
 
   const handleReserveActivity = () => {
     if (selectedActivity) {
-        handleDialogClose(); 
+      handleDialogClose(); 
 
-        Swal.fire({
-            title: "Confirmación de la actividad",
-            text: `Ha reservado para ${numberOfPeople} personas, la actividad ${selectedActivity.name}.`,
-            icon: "question",
-            confirmButtonText: "Sí, enviar confirmación",
-            showCancelButton: true,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                onActivitySelected({ ...selectedActivity, numberOfPeople });
-                Swal.fire({
-                    title: "Reservado",
-                    text: "La actividad ha sido confirmada con éxito.",
-                    icon: "success",
-                    confirmButtonText: "Cerrar",
-                });
-            }
-        });
+      Swal.fire({
+        title: "Confirmación de la actividad",
+        text: `Ha reservado para ${numberOfPeople} personas, la actividad ${selectedActivity.name}.`,
+        icon: "question",
+        confirmButtonText: "Sí, proceder al pago",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Open payment dialog
+          setPaymentDialogOpen(true);
+        }
+      });
     }
-};
+  };
+
+  const handlePaymentSuccess = () => {
+    Swal.fire({
+      title: "Pago exitoso",
+      text: "Tu pago ha sido procesado con éxito.",
+      icon: "success",
+      confirmButtonText: "Aceptar",
+    });
+    setPaymentDialogOpen(false); 
+  };
 
   return (
     <motion.div
@@ -277,18 +284,13 @@ const ActivitySearch = ({ onActivitySelected }) => {
                   <Typography>Actividad: {selectedActivity.name}</Typography>
                   <Typography>Ubicación: {selectedActivity.location}</Typography>
                   <Typography>Fecha: {activityDate}</Typography>
-                  <Typography>
-                    Precio: {selectedActivity.price.amount} {selectedActivity.price.currency}
-                  </Typography>
                   <TextField
                     label="Número de Personas"
                     type="number"
-                    fullWidth
                     value={numberOfPeople}
                     onChange={(e) => setNumberOfPeople(e.target.value)}
-                    InputProps={{
-                      inputProps: { min: 1 },
-                    }}
+                    inputProps={{ min: 1 }}
+                    fullWidth
                     sx={{ mt: 2 }}
                   />
                 </div>
@@ -296,9 +298,26 @@ const ActivitySearch = ({ onActivitySelected }) => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleDialogClose}>Cancelar</Button>
+            <Button onClick={handleDialogClose} color="primary">
+              Cancelar
+            </Button>
             <Button onClick={handleReserveActivity} color="primary">
               Reservar
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog open={paymentDialogOpen} onClose={() => setPaymentDialogOpen(false)}>
+          <DialogTitle>Confirmar Pago</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              ¿Deseas confirmar el pago para la actividad seleccionada?
+            </DialogContentText>
+            <PaymentModule onPaymentSuccess={handlePaymentSuccess} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setPaymentDialogOpen(false)} color="primary">
+              Cancelar
             </Button>
           </DialogActions>
         </Dialog>
@@ -308,7 +327,8 @@ const ActivitySearch = ({ onActivitySelected }) => {
 };
 
 ActivitySearch.propTypes = {
-  onActivitySelected: PropTypes.func.isRequired,
+  onActivitySelected: PropTypes.func,
+  onPaymentSuccess: PropTypes.func,
 };
 
 export default ActivitySearch;

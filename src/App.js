@@ -18,7 +18,9 @@ function App() {
 
   const handleActivitySelected = (activity) => {
     console.log("Actividad seleccionada:", activity);
-    // Aquí puedes manejar la actividad seleccionada como necesites
+  };
+  const handlePaymentSuccess = (paymentInfo) => {
+    console.log("Pago exitoso para la actividad: ", paymentInfo);
   };
 
   return (
@@ -38,8 +40,8 @@ function App() {
               path="/activities" 
               element={
                 <ActivitySearch 
-                  onCategoryChange={() => handleCategoryChange('activities')} 
-                  onActivitySelected={handleActivitySelected} // Pasa la función aquí
+                  onActivitySelected={handleActivitySelected}
+                  onPaymentSuccess={handlePaymentSuccess} 
                 />} 
             />
             <Route 
@@ -51,7 +53,8 @@ function App() {
               element={<Register onCategoryChange={() => handleCategoryChange('Register')} />} 
             />
           </Routes>
-          {/* <ImageGallery category={category} /> Pasar la categoría a la galería */}
+          {/* Si tienes un componente de galería, descomenta esta línea */}
+          {/* <ImageGallery category={category} /> */}
         </MainLayout>
       </Router>
     </UserProvider>
