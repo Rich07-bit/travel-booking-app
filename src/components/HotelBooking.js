@@ -50,7 +50,7 @@ const HotelBooking = () => {
             price: { total: "299", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+Standard,+High+Line+NY",
+        image: "https://www.travelplusstyle.com/wp-content/gallery/the-standard-new-york/top-of-the-standard-lounge.jpg",
       },
       {
         hotel: {
@@ -63,7 +63,7 @@ const HotelBooking = () => {
             price: { total: "350", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+NoMad+Hotel",
+        image: "https://www.sherry.wine/media/images/the_nomad_eater-1011.width-1000.jpg",
       },
       {
         hotel: {
@@ -76,7 +76,7 @@ const HotelBooking = () => {
             price: { total: "249", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=CitizenM+New+York",
+        image: "https://www.es.kayak.com/rimg/himg/b2/41/40/leonardo-1313710-New_York_Times_Square-cloudM-CitizenM_NYT-061_high_O-356036.jpg?width=1366&height=768&crop=true",
       },
       {
         hotel: {
@@ -89,7 +89,7 @@ const HotelBooking = () => {
             price: { total: "200", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+Roosevelt+Hotel",
+        image: "https://th.bing.com/th/id/OIP.3zCYJVaKJh2kZli8f9cEBwHaEK?w=1920&h=1080&rs=1&pid=ImgDetMain",
       },
       {
         hotel: {
@@ -102,7 +102,7 @@ const HotelBooking = () => {
             price: { total: "400", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=W+New+York",
+        image: "https://thepointsguy.global.ssl.fastly.net/us/originals/2019/02/W-Times-Square-NY_ERosen-15.jpg",
       },
       {
         hotel: {
@@ -115,7 +115,7 @@ const HotelBooking = () => {
             price: { total: "450", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=InterContinental+NY",
+        image: "https://pix10.agoda.net/hotelImages/734/7346/7346_14041809510019119957.jpg?s=1024x768",
       },
     ],
     LA: [
@@ -130,7 +130,7 @@ const HotelBooking = () => {
             price: { total: "700", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=Hotel+Bel-Air",
+        image: "https://static01.nyt.com/images/2013/05/26/travel/26CHECKIN1_SPAN/26CHECKIN1_SPAN-master1050-v2.jpg",
       },
       {
         hotel: {
@@ -143,7 +143,7 @@ const HotelBooking = () => {
             price: { total: "800", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+Beverly+Hills+Hotel",
+        image: "https://www.tripsavvy.com/thmb/p6GdX09AqWlc80M2-RczIGNgr-0=/5354x3569/filters:no_upscale():max_bytes(150000):strip_icc()/10467348213_a095ca7b2a_o-56a10ee03df78cafdaa8d7f6.jpg",
       },
       {
         hotel: {
@@ -156,7 +156,7 @@ const HotelBooking = () => {
             price: { total: "350", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+Hollywood+Roosevelt",
+        image: "https://www.fiftygrande.com/wp-content/uploads/2022/04/Hotel-Roosevelt-Hero.jpg",
       },
       {
         hotel: {
@@ -169,7 +169,7 @@ const HotelBooking = () => {
             price: { total: "500", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=SLS+Hotel",
+        image: "https://cache.marriott.com/marriottassets/marriott/LAXLS/laxls-hotel-3265-hor-wide.jpg?interpolation=progressive-bilinear&downsize=1440px:*",
       },
       {
         hotel: {
@@ -182,7 +182,7 @@ const HotelBooking = () => {
             price: { total: "420", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+NoMad+Hotel+LA",
+        image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/45/34/f5/pool.jpg?w=900&h=-1&s=1",
       },
       {
         hotel: {
@@ -195,7 +195,7 @@ const HotelBooking = () => {
             price: { total: "275", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=Kimpton+Everly+Hotel",
+        image: "https://th.bing.com/th/id/OIP.q7fq9YinXcIDPXOD_3OeJQHaJ4?rs=1&pid=ImgDetMain",
       },
     ],
     CHI: [
@@ -210,7 +210,7 @@ const HotelBooking = () => {
             price: { total: "450", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+Langham+Chicago",
+        image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/45/2f/5f/exterior.jpg?w=900&h=-1&s=1",
       },
       {
         hotel: {
@@ -223,7 +223,7 @@ const HotelBooking = () => {
             price: { total: "600", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+Peninsula+Chicago",
+        image: "https://th.bing.com/th/id/OIP.C9_H_0H6ZSVpxnFsPNiR-AHaFm?w=1200&h=908&rs=1&pid=ImgDetMain",
       },
       {
         hotel: {
@@ -236,7 +236,7 @@ const HotelBooking = () => {
             price: { total: "500", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=The+Ritz-Carlton+Chicago",
+        image: "https://moneyinc.com/wp-content/uploads/2016/09/Ritz-Carlton-Chicago.jpg",
       },
       {
         hotel: {
@@ -249,7 +249,7 @@ const HotelBooking = () => {
             price: { total: "350", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=Thompson+Chicago",
+        image: "https://abcnews.go.com/images/Lifestyle/HT_thompson_chicago_hotel_entrance_1_jt_151002_3x2_1600.jpg",
       },
       {
         hotel: {
@@ -262,7 +262,7 @@ const HotelBooking = () => {
             price: { total: "180", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=Palmer+House+Hilton",
+        image: "https://www.palmerhousehiltonhotel.com/images/2013/10/Palmer-house-lobby-final-larger-e1380753290284-700x344.jpg",
       },
       {
         hotel: {
@@ -275,7 +275,7 @@ const HotelBooking = () => {
             price: { total: "210", currency: "USD" },
           },
         ],
-        image: "https://via.placeholder.com/300x200?text=Hyatt+Regency+Chicago",
+        image: "https://cdn.choosechicago.com/uploads/2019/08/Exterior-hyatt-2400x1600.jpg",
       },
     ],
   };
