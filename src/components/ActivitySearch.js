@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -17,10 +17,8 @@ import {
   DialogActions,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import axios from "axios";
-import PropTypes from 'prop-types';
 import Swal from "sweetalert2";
-import PaymentModule from "./Payment"; 
+import PaymentModule from "./Payment";
 
 const ActivitySearch = () => {
   const [activityDate, setActivityDate] = useState("");
@@ -31,97 +29,164 @@ const ActivitySearch = () => {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [numberOfPeople, setNumberOfPeople] = useState(1);
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
-  const [accessToken, setAccessToken] = useState(null);
 
-  const apiKey = process.env.REACT_APP_AMADEUS_API_KEY;
-  const secret = process.env.REACT_APP_AMADEUS_API_SECRET;
+  const sampleActivities = [
+    {
+      id: 1,
+      name: "Excursión a la Estatua de la Libertad",
+      location: "Nueva York",
+      price: { amount: "50.00", currency: "USD" },
+      imageUrl: "https://4.bp.blogspot.com/-3-iZryHikBc/UT-1kJ85API/AAAAAAAAQbM/QR93MB6bNIE/s1600/estatua-de-la-libertad.jpg",
+    },
+    {
+      id: 2,
+      name: "Tour por el Empire State",
+      location: "Nueva York",
+      price: { amount: "30.00", currency: "USD" },
+      imageUrl: "https://th.bing.com/th?id=OLC.MjjHi+UL3lIbfA480x360&rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 3,
+      name: "Paseo en Barco por el Río Hudson",
+      location: "Nueva York",
+      price: { amount: "45.00", currency: "USD" },
+      imageUrl: "https://th.bing.com/th/id/OIP.FR3LSbAPkVmBcZ56QkNcggHaEs?w=1024&h=649&rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 4,
+      name: "Visita al Museo de Arte Moderno (MoMA)",
+      location: "Nueva York",
+      price: { amount: "25.00", currency: "USD" },
+      imageUrl: "https://th.bing.com/th?id=OLC.eMWnVoA8kj//gQ480x360&rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 5,
+      name: "Tour en Bicicleta por Central Park",
+      location: "Nueva York",
+      price: { amount: "35.00", currency: "USD" },
+      imageUrl: "https://cdn.atrapalo.com/common/photo/event/4/8/5/0413/1145005/vertic_880_0.jpg",
+    },
+    {
+      id: 6,
+      name: "Tour Histórico por Wall Street",
+      location: "Nueva York",
+      price: { amount: "40.00", currency: "USD" },
+      imageUrl: "https://assets.editorial.aetnd.com/uploads/2019/01/topic_wallstreet-926069614.jpg",
+    },
+    {
+      id: 7,
+      name: "Recorrido por el Memorial del 9/11",
+      location: "Nueva York",
+      price: { amount: "20.00", currency: "USD" },
+      imageUrl: "https://th.bing.com/th/id/OIP.q5JHxWaUoTm7hoohMFxLtwHaFj?rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 8,
+      name: "Experiencia Gastronómica en Brooklyn",
+      location: "Nueva York",
+      price: { amount: "60.00", currency: "USD" },
+      imageUrl: "https://th.bing.com/th/id/OIP.VSKfhBQWMzLkw9pYrgyL2QHaFj?w=640&h=480&rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 9,
+      name: "Espectáculo de Broadway",
+      location: "Nueva York",
+      price: { amount: "100.00", currency: "USD" },
+      imageUrl: "https://directorioturistico.net/wp-content/uploads/2013/05/Broadway.jpg",
+    },
+    {
+      id: 10,
+      name: "Tour Nocturno por Times Square",
+      location: "Nueva York",
+      price: { amount: "25.00", currency: "USD" },
+      imageUrl: "https://cdn2.civitatis.com/estados-unidos/nueva-york/galeria/big/time-square-noche.jpg",
+    },
+    {
+      id: 11,
+      name: "Excursión al Coliseo",
+      location: "Roma",
+      price: { amount: "70.00", currency: "EUR" },
+      imageUrl: "https://th.bing.com/th/id/OIP.b3gYYphuaw3kewrzxKReBgHaFI?rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 12,
+      name: "Tour por el Vaticano",
+      location: "Roma",
+      price: { amount: "80.00", currency: "EUR" },
+      imageUrl: "https://ramsus80.sirv.com/WP_www.vaticanmuseumstour.com/2016/10/square_speter.jpg",
+    },
+    {
+      id: 13,
+      name: "Paseo en Góndola",
+      location: "Venecia",
+      price: { amount: "90.00", currency: "EUR" },
+      imageUrl: "https://th.bing.com/th/id/OIP.ZKqFPl-1kEcLHI04sy9i7AHaE8?rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 14,
+      name: "Visita al Louvre",
+      location: "París",
+      price: { amount: "60.00", currency: "EUR" },
+      imageUrl: "https://fthmb.tqn.com/Qbn95F8HLqnZp9t_prpW7pcf5iw=/960x0/filters:no_upscale()/LouvresengchyeteoGettyImages-5a14669aaad52b00370c599e.jpg",
+    },
+    {
+      id: 15,
+      name: "Recorrido por la Torre Eiffel",
+      location: "París",
+      price: { amount: "30.00", currency: "EUR" },
+      imageUrl: "https://th.bing.com/th/id/OIP.QDNBJy2C1jdrzFVC6IyoBwHaHa?w=1024&h=1024&rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 16,
+      name: "Safari en el Desierto",
+      location: "Dubai",
+      price: { amount: "120.00", currency: "AED" },
+      imageUrl: "https://www.101viajes.com/sites/default/files/styles/guia-full/public/atardecer-safari.desierto-dubai_0.jpg",
+    },
+    {
+      id: 17,
+      name: "Visita al Burj Khalifa",
+      location: "Dubai",
+      price: { amount: "100.00", currency: "AED" },
+      imageUrl: "https://th.bing.com/th/id/OIP.0G2DCM-z1Iq8jLoUa8_KDwHaE8?w=1920&h=1280&rs=1&pid=ImgDetMain",
+    },
+    {
+      id: 18,
+      name: "Tour en el Gran Cañón",
+      location: "Arizona",
+      price: { amount: "150.00", currency: "USD" },
+      imageUrl: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=500",
+    },
+    {
+      id: 19,
+      name: "Excursión en Table Mountain",
+      location: "Cape Town",
+      price: { amount: "110.00", currency: "ZAR" },
+      imageUrl: "https://www.capetown.travel/wp-content/uploads/2022/07/Table-Mountain-Camps-Bay.jpg"
+    },
+    {
+      id: 20,
+      name: "Tour a la Ópera de Sídney",
+      location: "Sídney",
+      price: { amount: "90.00", currency: "AUD" },
+      imageUrl: "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=500",
+    },
+];
 
-  const getAccessToken = async () => {
-    const data = new URLSearchParams();
-    data.append("grant_type", "client_credentials");
-    data.append("client_id", apiKey);
-    data.append("client_secret", secret);
-
-    try {
-      const response = await axios.post(
-        "https://test.api.amadeus.com/v1/security/oauth2/token",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-      setAccessToken(response.data.access_token);
-    } catch (error) {
-      console.error("Error al obtener el token de acceso:", error.response.data);
-      setErrorMessage("Error al obtener el token de acceso");
-      setOpenSnackbar(true);
-    }
-  };
-
-  useEffect(() => {
-    getAccessToken();
-  }, []);
-
-  const getRandomPrice = () => {
-    return {
-      amount: (Math.random() * (100 - 20) + 20).toFixed(2),
-      currency: "USD",
-    };
-  };
-
-  const searchActivities = async () => {
-    if (!accessToken) {
-      setErrorMessage("No se pudo obtener el token de acceso");
-      setOpenSnackbar(true);
-      return;
-    }
-
+  const searchActivities = () => {
     if (!activityDate) {
       setErrorMessage("Por favor, ingrese la fecha.");
       setOpenSnackbar(true);
       return;
     }
 
-    try {
-      const response = await axios.get(
-        "https://test.api.amadeus.com/v1/shopping/activities",
-        {
-          params: {
-            startDate: activityDate,
-            latitude: 40.7128,
-            longitude: -74.0060,
-          },
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (response.data.data && response.data.data.length > 0) {
-        const activitiesWithImages = response.data.data.map((activity) => ({
-          ...activity,
-          price: getRandomPrice(),
-          imageUrl: activity.pictures ? activity.pictures[0] : "https://via.placeholder.com/150",
-        }));
-
-        setFilteredActivities(activitiesWithImages);
-      } else {
-        setErrorMessage("No se encontraron actividades.");
-        setOpenSnackbar(true);
-      }
-    } catch (error) {
-      console.error("Error al buscar actividades:", error.response?.data || error.message);
-      setErrorMessage("Error al buscar actividades");
-      setOpenSnackbar(true);
-    }
+    setFilteredActivities(sampleActivities);
   };
 
   const handleActivityClick = (activity) => {
     setSelectedActivity(activity);
-    setNumberOfPeople(1);  // Reset number of people
-    setOpenDialog(true);  // Open dialog
+    setNumberOfPeople(1);
+    setOpenDialog(true);
   };
 
   const handleDialogClose = () => {
@@ -131,7 +196,7 @@ const ActivitySearch = () => {
 
   const handleReserveActivity = () => {
     if (selectedActivity) {
-      handleDialogClose(); 
+      handleDialogClose();
 
       Swal.fire({
         title: "Confirmación de la actividad",
@@ -141,7 +206,6 @@ const ActivitySearch = () => {
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          // Open payment dialog
           setPaymentDialogOpen(true);
         }
       });
@@ -155,7 +219,7 @@ const ActivitySearch = () => {
       icon: "success",
       confirmButtonText: "Aceptar",
     });
-    setPaymentDialogOpen(false); 
+    setPaymentDialogOpen(false);
   };
 
   return (
@@ -324,11 +388,6 @@ const ActivitySearch = () => {
       </Box>
     </motion.div>
   );
-};
-
-ActivitySearch.propTypes = {
-  onActivitySelected: PropTypes.func,
-  onPaymentSuccess: PropTypes.func,
 };
 
 export default ActivitySearch;
